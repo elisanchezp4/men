@@ -1,0 +1,27 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /men
+spring:
+  application:
+    name: ms-external-authentication
+  h2:
+    console:
+      enabled: true  # Enables the H2 console
+      path: /h2-console # Sets the path for the H2 console
+      settings:
+        web-allow-others: true # Allows remote connections (for testing)
+  datasource:
+    url: jdbc:h2:mem:external-authentication # Defines the in-memory database URL
+    driverClassName: org.h2.Driver # Specifies the H2 driver class
+    username: sa # Default H2 username
+    password: # No password by default
+    platform: h2 # Specifies the database platform
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect # Hibernate dialect for H2
+    hibernate:
+      ddl-auto: update # Automatically creates/updates the schema
+    show-sql: true # Logs all SQL statements to the console
+    properties:
+      hibernate:
+        format_sql: true # Formats the logged SQL for better readability

@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,8 +49,8 @@ public class RoleController {
             @ApiResponse(responseCode = "200", description = "Lista de roles obtenida exitosamente.", content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = List.class)))
     })
     @GetMapping("/list")
-    public ResponseEntity<List<Role>> findAll() {
-        return new ResponseEntity<>(roleService.findAll(), OK);
+    public ResponseEntity<Page<Role>> findAll(@PageableDefault() Pageable pageable) {
+        return new ResponseEntity<>(roleService.findAll(pageable), OK);
     }
     @Operation(summary = "Busca un rol por su ID", description = "Devuelve un rol específico por su ID.")
     @ApiResponses(value = {

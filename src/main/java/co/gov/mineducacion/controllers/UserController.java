@@ -11,7 +11,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -68,8 +72,8 @@ public class UserController {
     })
 
     @GetMapping("/list")
-    public ResponseEntity<List<User>> findAll() {
-        return new ResponseEntity<>(userService.findAll(), OK);
+    public ResponseEntity<Page<User>> findAll(@PageableDefault() Pageable pageable) {
+        return new ResponseEntity<>(userService.findAll(pageable), OK);
     }
 
     @Operation(summary = "Busca un usuario por su ID", description = "Devuelve un usuario específico por su ID.")
@@ -87,8 +91,8 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Usuario encontrado", content = @Content(schema = @Schema(implementation = User.class))),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado", content = @Content(mediaType = "application/json"))
     })
-    @GetMapping("/email/{email}")
-    public ResponseEntity<User> findByEmail(@PathVariable String email){
+    @GetMapping("/email")
+    public ResponseEntity<User> findByEmail(@PathParam("email") String email){
         return new ResponseEntity<>(userService.findByEmail(email),OK);
     }
 

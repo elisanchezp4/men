@@ -6,9 +6,9 @@ import co.gov.mineducacion.repositories.RoleRepository;
 import co.gov.mineducacion.services.IRoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
@@ -23,8 +23,8 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public List<Role> findAll() {
-        return (List<Role>) roleRepository.findAll();
+    public Page<Role> findAll(Pageable pageable) {
+        return roleRepository.findAll(pageable);
     }
 
     @Override
